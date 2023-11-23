@@ -11,8 +11,10 @@ Het hoofddoel van dit project is om gebruikers te begeleiden bij het proces van 
 1. **Maak Azure-resources:**
    - Stel essentiële resources in, zoals een Storage Account, Azure Data Factory (ADF), SQL Server en een Database in de Azure Portal.
 
-2. **Maak bronnen toegankelijk:**
-   - Zorg ervoor dat de bronbestanden die in deze repository zijn opgenomen beschikbaar en toegankelijk zijn voor het gegevenslaadproces.
+2. **Maak bronnen toegankelijk en SQL Source Laden naar Eigen SQL Server:**
+   - Kloon deze repository om de vereiste bronbestanden te verkrijgen.
+   - Zorg ervoor dat de benodigde bronbestanden (CSV, SQL) beschikbaar en toegankelijk zijn.
+   - Laad de SQL-bron van deze repository naar de eerder aangemaakte SQL Server.
 
 3. **Configureer Azure-resources:**
    - Configureer de in stap 1 aangemaakte Azure-resources om de noodzakelijke verbindingen en instellingen voor gegevensverplaatsing tot stand te brengen.
@@ -34,10 +36,11 @@ Om de training succesvol af te ronden, volg deze stappen:
   - Azure Data Factory (ADF)
   - SQL Server en Database
 
-### Stap 2: Maak bronnen toegankelijk
+### Stap 2: Maak bronnen toegankelijk en SQL Source Laden naar Eigen SQL Server
 
 - Kloon deze repository om de vereiste bronbestanden te verkrijgen.
 - Zorg ervoor dat de benodigde bronbestanden (CSV, SQL) beschikbaar en toegankelijk zijn.
+- Laad de SQL-bron van deze repository naar de eerder aangemaakte SQL Server.
 
 ### Stap 3: Configureer Azure-resources
 
