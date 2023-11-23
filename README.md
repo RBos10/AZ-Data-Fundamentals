@@ -58,8 +58,4 @@ Om de training succesvol af te ronden, volg deze stappen:
 - Maak visualisaties en rapporten op basis van de geladen gegevens.
 
 ## Aanvullende notities
-
-- Gedetailleerde documentatie voor elke stap is te vinden in de relevante mappen van deze repository.
-- Voor eventuele vragen of problemen kunt u een [issue](link-naar-issues) openen in deze repository.
-
 Veel plezier met het leren en verkennen van Azure Data Fundamentals! 🚀
