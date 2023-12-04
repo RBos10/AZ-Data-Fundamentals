@@ -1,6 +1,6 @@
 # Fortezza Azure Data Fundamentals Training
 
-Dit GitHub-project bevat alle benodigde informatie en bronnen voor de Fortezza Azure Data Fundamentals Training. In deze training leer je hoe je Azure-services kunt gebruiken om een end-to-end gegevensoplossing te bouwen. De belangrijkste opdrachten omvatten het aanmaken van Azure-resources, het configureren van Azure Data Factory, het laden van gegevens en het integreren van Power BI met je Azure SQL Database.
+Dit GitHub-project bevat alle benodigde informatie en bronnen voor de Fortezza Azure Data Fundamentals Training. In deze training leer je hoe je Azure-services kunt gebruiken om een end-to-end gegevensoplossing te bouwen. De belangrijkste opdrachten omvatten het aanmaken van Azure-resources, het configureren van Azure Data Factory, het laden van gegevens en het integreren van Power BI met je Azure SQL Databases.
 
 ## Inhoudsopgave
 
@@ -31,16 +31,10 @@ Ga naar [https://portal.azure.com](https://portal.azure.com) en log in met je Az
 #### Stap 2: Resourcegroep maken
 Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Resourcegroepen" in het Azure Portal-menu, en klik vervolgens op "Resourcegroep maken". Volg de instructies om een nieuwe resourcegroep aan te maken.
 
-#### Stap 3: Azure SQL Server en Database
-- Klik op "SQL-servers" in het Azure Portal-menu en klik op "Nieuwe maken".
-- Volg de instructies om een SQL-server aan te maken en kies de resourcegroep die je in stap 2 hebt gemaakt.
-- Nadat de SQL-server is gemaakt, klik je op de server en ga je naar "Databases".
-- Klik op "Nieuwe database maken" en selecteer de optie om een database te maken vanuit een back-up (gebruik de 'WorldWideImporters' back-up).
-
-#### Stap 4: Storage Account en Blob Storage
-- Klik op "Opslagaccounts" in het Azure Portal-menu en klik op "Nieuw".
-- Volg de instructies om een Storage Account aan te maken en kies dezelfde resourcegroep als in stap 2.
-- Nadat de Storage Account is gemaakt, ga je naar de "Blob-service" en maak je een nieuwe container aan om bestanden op te slaan.
+#### Stap 3: Azure SQL Databases aanmaken
+- Klik op "SQL-databases" in het Azure Portal-menu en klik op "Nieuwe maken".
+- Volg de instructies om twee Azure SQL Databases aan te maken. De ene database moet gevuld worden met Sample Data, terwijl de andere de doeldatabase wordt.
+- Voeg bij het aanmaken van de databases je huidige IP-adres toe aan de firewallregels om toegang te krijgen tot de databases.
 
 ### Opdracht 2: Aanmaken van Azure Data Factory
 
@@ -56,22 +50,14 @@ Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Res
 
 #### Stap 2: Linked Services
 - Klik op "Author" en ga naar "Connections".
-- Klik op "New" om Linked Services voor Azure SQL Database, Blob Storage en andere bronnen te configureren. Je moet de verbindingsreeksen correct instellen om toegang te krijgen tot de resources.
+- Klik op "New" om Linked Services voor beide Azure SQL Databases te configureren. Je moet de verbindingsreeksen correct instellen om toegang te krijgen tot de databases.
 
 #### Stap 3: Toegang verlenen aan Azure Data Factory
-- Ga naar de Azure Portal en zoek naar je Azure SQL Database.
-- Klik op de database en ga naar "Queryeditor (voorbeeld)".
+- Ga naar de Azure Portal en zoek naar de Azure SQL Databases die je in opdracht 1 hebt aangemaakt.
+- Klik op elke database en ga naar "Firewall en virtueel netwerk".
+- Voeg het IP-adres van je Azure Data Factory toe aan de lijst met toegestane IP-adress
 
-#### Stap 4: Voer de volgende SQL-code uit om Azure Data Factory toegang te geven tot de database:
-
-```sql
-CREATE USER [azure-data-factory-name] FROM EXTERNAL PROVIDER
-EXEC sp.addrolemember 'db_owner','azure-data-factory-name'
-```
-
-Hiermee voeg je de Managed Identity van Azure Data Factory toe als gebruiker van de SQL Database en ken je de `db_owner`-rol toe. Dit zorgt ervoor dat Azure Data Factory de nodige machtigingen heeft om gegevens te schrijven naar en te lezen uit de SQL Database.
-
-Dit zijn de stappen om Azure Data Factory toegang te geven tot de Azure SQL Database.
+en om verbinding te maken met de databases.
 
 ### Opdracht 4: Configureren van Datasets
 
@@ -88,33 +74,25 @@ Dit zijn de stappen om Azure Data Factory toegang te geven tot de Azure SQL Data
 ### Opdracht 6: Laden van gegevens naar Azure SQL Database
 
 #### Stap 1: Azure Data Factory
-- Binnen je Pipelines, configureer activiteiten om gegevens van je bronnen (bijvoorbeeld Blob Storage) naar je Azure SQL Database te kopiëren. Onderzoek verschillende laadopties, zoals bulk insert of data movement services.
+- Binnen je Pipelines, configureer activiteiten om gegevens van je bronnen naar de doeldatabase te kopiëren. Je kunt gegevensverplaatsingstaken gebruiken om de gegevens te laden.
 
-### Opdracht 7:
-
- Verbinden van Power BI
+### Opdracht 7: Verbinden van Power BI
 
 #### Stap 1: Power BI Desktop
 - Download en installeer [Power BI Desktop](https://powerbi.microsoft.com/nl-nl/desktop/).
 - Open Power BI Desktop.
 
 #### Stap 2: Gegevensverbinding
-- Klik op "Gegevens ophalen" om een nieuwe gegevensverbinding te maken naar je Azure SQL Database. Gebruik de juiste verbindingsreeks die je in opdracht 3 hebt geconfigureerd.
+- Klik op "Gegevens ophalen" om een nieuwe gegevensverbinding te maken naar de doeldatabase van je Azure SQL Database. Gebruik de juiste verbindingsreeks die je in opdracht 3 hebt geconfigureerd.
 
 #### Stap 3: Gegevensvisualisatie
-- Bouw rapporten en dashboards op basis van de gegevens in je database met behulp van Power BI Desktop.
+- Bouw rapporten en dashboards op basis van de gegevens in je doeldatabase met behulp van Power BI Desktop.
 
 ## Bonusopdracht
 
 Voor de bonusopdracht om CSV-bestanden in deze repository te laden in je Azure SQL Database, kun je de volgende stappen volgen:
 
 #### Stap 1: Azure Data Factory
-- Breid je Azure Data Factory-pijplijnen uit om CSV-bestanden van deze repository te lezen en te transformeren. Je kunt bijvoorbeeld een Blob Storage-linked service gebruiken om de bestanden op te slaan en dan een kopieeractiviteit gebruiken om de gegevens naar je database te verplaatsen.
+- Breid je Azure Data Factory-pijplijnen uit om CSV-bestanden van deze repository te lezen en te transformeren. Je kunt bijvoorbeeld een Blob Storage-linked service gebruiken om de bestanden op te slaan en dan een kopieeractiviteit gebruiken om de gegevens naar je doeldatabase te verplaatsen.
 
-## Bijdragen
-
-We moedigen bijdragen aan! Als je verbeteringen wilt aanbrengen of nieuwe opdrachten wilt toevoegen aan dit trainingsproject, maak dan een fork van dit repository, voer je wijzigingen uit en dien een pull-verzoek in.
-
-## Licentie
-
-Dit project wordt onder een open-source licentie vrijgegeven. Zorg ervoor dat je de licentievoorwaarden naleeft bij gebruik van de broncode en de inhoud in dit repository.
+Dit zijn de bijgewerkte stappen voor de opdrachten. Zorg ervoor dat je alle stappen zorgvuldig volgt om de training succesvol af te ronden.
