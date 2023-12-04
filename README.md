@@ -8,12 +8,11 @@ Dit GitHub-project bevat alle benodigde informatie en bronnen voor de Fortezza A
 2. [Opdrachten](#opdrachten)
     - [Opdracht 1: Aanmaken van Azure Resources](#opdracht-1-aanmaken-van-azure-resources)
     - [Opdracht 2: Aanmaken van Azure Data Factory](#opdracht-2-aanmaken-van-azure-data-factory)
-    - [Opdracht 3: Configureren van Linked Services](#opdracht-3-configureren-van-linked-services)
+    - [Opdracht 3: Configureren van Linked Services en Toegang voor Azure Data Factory](#opdracht-3-configureren-van-linked-services-en-toegang-voor-azure-data-factory)
     - [Opdracht 4: Configureren van Datasets](#opdracht-4-configureren-van-datasets)
     - [Opdracht 5: Configureren van Pipelines](#opdracht-5-configureren-van-pipelines)
     - [Opdracht 6: Laden van gegevens naar Azure SQL Database](#opdracht-6-laden-van-gegevens-naar-azure-sql-database)
     - [Opdracht 7: Verbinden van Power BI](#opdracht-7-verbinden-van-power-bi)
-    - [Opdracht 8: Netwerk Whitelisting](#opdracht-8-netwerk-whitelisting)
 3. [Bonusopdracht](#bonusopdracht)
 4. [Bijdragen](#bijdragen)
 5. [Licentie](#licentie)
@@ -49,7 +48,7 @@ Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Res
 - Klik op "Data + analyse" in het Azure Portal-menu en selecteer "Azure Data Factory".
 - Klik op "Maken" en volg de instructies om een Azure Data Factory te maken. Kies de resourcegroep die je eerder hebt gemaakt.
 
-### Opdracht 3: Configureren van Linked Services
+### Opdracht 3: Configureren van Linked Services en Toegang voor Azure Data Factory
 
 #### Stap 1: Azure Data Factory
 - Ga naar de eerder gemaakte Azure Data Factory.
@@ -58,6 +57,21 @@ Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Res
 #### Stap 2: Linked Services
 - Klik op "Author" en ga naar "Connections".
 - Klik op "New" om Linked Services voor Azure SQL Database, Blob Storage en andere bronnen te configureren. Je moet de verbindingsreeksen correct instellen om toegang te krijgen tot de resources.
+
+#### Stap 3: Toegang verlenen aan Azure Data Factory
+- Ga naar de Azure Portal en zoek naar je Azure SQL Database.
+- Klik op de database en ga naar "Queryeditor (voorbeeld)".
+
+#### Stap 4: Voer de volgende SQL-code uit om Azure Data Factory toegang te geven tot de database:
+
+```sql
+CREATE USER [azure-data-factory-name] FROM EXTERNAL PROVIDER
+EXEC sp.addrolemember 'db_owner','azure-data-factory-name'
+```
+
+Hiermee voeg je de Managed Identity van Azure Data Factory toe als gebruiker van de SQL Database en ken je de `db_owner`-rol toe. Dit zorgt ervoor dat Azure Data Factory de nodige machtigingen heeft om gegevens te schrijven naar en te lezen uit de SQL Database.
+
+Dit zijn de stappen om Azure Data Factory toegang te geven tot de Azure SQL Database.
 
 ### Opdracht 4: Configureren van Datasets
 
@@ -76,7 +90,9 @@ Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Res
 #### Stap 1: Azure Data Factory
 - Binnen je Pipelines, configureer activiteiten om gegevens van je bronnen (bijvoorbeeld Blob Storage) naar je Azure SQL Database te kopiëren. Onderzoek verschillende laadopties, zoals bulk insert of data movement services.
 
-### Opdracht 7: Verbinden van Power BI
+### Opdracht 7:
+
+ Verbinden van Power BI
 
 #### Stap 1: Power BI Desktop
 - Download en installeer [Power BI Desktop](https://powerbi.microsoft.com/nl-nl/desktop/).
@@ -87,16 +103,6 @@ Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Res
 
 #### Stap 3: Gegevensvisualisatie
 - Bouw rapporten en dashboards op basis van de gegevens in je database met behulp van Power BI Desktop.
-
-### Opdracht 8: Netwerk Whitelisting
-
-#### Stap 1: Azure Portal
-- Ga naar de Azure Portal en zoek naar "Netwerkbeveiligingsgroepen".
-
-#### Stap 2: Netwerkbeveiligingsgro
-
-epen
-- Configureer netwerkbeveiligingsgroepen om alleen specifieke IP-adressen toe te staan om toegang te krijgen tot je Azure SQL Server en andere resources. Voeg de IP-adressen toe die toegang moeten hebben.
 
 ## Bonusopdracht
 
