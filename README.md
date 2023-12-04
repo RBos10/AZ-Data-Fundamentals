@@ -14,8 +14,6 @@ Dit GitHub-project bevat alle benodigde informatie en bronnen voor de Fortezza A
     - [Opdracht 6: Laden van gegevens naar Azure SQL Database](#opdracht-6-laden-van-gegevens-naar-azure-sql-database)
     - [Opdracht 7: Verbinden van Power BI](#opdracht-7-verbinden-van-power-bi)
 3. [Bonusopdracht](#bonusopdracht)
-4. [Bijdragen](#bijdragen)
-5. [Licentie](#licentie)
 
 ## Inleiding
 
