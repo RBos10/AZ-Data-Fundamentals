@@ -25,74 +25,117 @@ Deze training is bedoeld om je vertrouwd te maken met Azure-dataoplossingen en b
 
 ### Opdracht 1: Aanmaken van Azure Resources
 
-#### Stap 1: Inloggen op de Azure Portal
-Ga naar [https://portal.azure.com](https://portal.azure.com) en log in met je Azure-account. Als je geen Azure-account hebt, kun je er een aanmaken.
+**Opdracht:** Aanmaken van twee Azure SQL Databases, een gevuld met Sample Data en de andere als de doeldatabase.
 
-#### Stap 2: Resourcegroep maken
-Een resourcegroep helpt je om al je Azure-resources te organiseren. Klik op "Resourcegroepen" in het Azure Portal-menu, en klik vervolgens op "Resourcegroep maken". Volg de instructies om een nieuwe resourcegroep aan te maken.
+**Uit te voeren stappen:**
 
-#### Stap 3: Azure SQL Databases aanmaken
-- Klik op "SQL-databases" in het Azure Portal-menu en klik op "Nieuwe maken".
-- Volg de instructies om twee Azure SQL Databases aan te maken. De ene database moet gevuld worden met Sample Data, terwijl de andere de doeldatabase wordt.
-- Voeg bij het aanmaken van de databases je huidige IP-adres toe aan de firewallregels om toegang te krijgen tot de databases.
+1. **Inloggen op de Azure Portal**
+   - Ga naar [https://portal.azure.com](https://portal.azure.com) en log in met je Azure-account. Als je geen Azure-account hebt, kun je er een aanmaken.
+
+2. **Resourcegroep maken**
+   - Klik op "Resourcegroepen" in het Azure Portal-menu, en klik vervolgens op "Resourcegroep maken".
+   - Volg de instructies om een nieuwe resourcegroep aan te maken.
+
+3. **Azure SQL Databases aanmaken**
+   - Klik op "SQL-databases" in het Azure Portal-menu en klik op "Nieuwe maken".
+   - Volg de instructies om twee Azure SQL Databases aan te maken. Geef ze duidelijke namen en kies bij één database de optie om deze te vullen met Sample Data (bijvoorbeeld AdventureWorksLT).
+
+4. **Toevoegen van je huidige IP-adres aan de firewallregels**
+   - Ga naar de instellingen van elke database en zoek de optie "Firewall en virtueel netwerk".
+   - Voeg je huidige IP-adres toe aan de lijst met toegestane IP-adressen om verbinding te maken met de databases.
 
 ### Opdracht 2: Aanmaken van Azure Data Factory
 
-#### Stap 1: Azure Data Factory maken
-- Klik op "Data + analyse" in het Azure Portal-menu en selecteer "Azure Data Factory".
-- Klik op "Maken" en volg de instructies om een Azure Data Factory te maken. Kies de resourcegroep die je eerder hebt gemaakt.
+**Opdracht:** Aanmaken van een Azure Data Factory.
+
+**Uit te voeren stappen:**
+
+1. **Azure Data Factory maken**
+   - Klik op "Data + analyse" in het Azure Portal-menu en selecteer "Azure Data Factory".
+   - Klik op "Maken" en volg de instructies om een Azure Data Factory te maken. Kies de resourcegroep die je eerder hebt gemaakt.
 
 ### Opdracht 3: Configureren van Linked Services en Toegang voor Azure Data Factory
 
-#### Stap 1: Azure Data Factory
-- Ga naar de eerder gemaakte Azure Data Factory.
-- In het linkerdeelvenster, klik op "Author & Monitor" om de Azure Data Factory-editor te openen.
+**Opdracht:** Configureren van Linked Services voor beide Azure SQL Databases en het verlenen van toegang voor Azure Data Factory.
 
-#### Stap 2: Linked Services
-- Klik op "Author" en ga naar "Connections".
-- Klik op "New" om Linked Services voor beide Azure SQL Databases te configureren. Je moet de verbindingsreeksen correct instellen om toegang te krijgen tot de databases.
+**Uit te voeren stappen:**
 
-#### Stap 3: Toegang verlenen aan Azure Data Factory
-- Ga naar de Azure Portal en zoek naar de Azure SQL Databases die je in opdracht 1 hebt aangemaakt.
-- Klik op elke database en ga naar "Firewall en virtueel netwerk".
-- Voeg het IP-adres van je Azure Data Factory toe aan de lijst met toegestane IP-adress
+1. **Azure Data Factory**
+   - Ga naar de eerder gemaakte Azure Data Factory.
+   - In het linkerdeelvenster, klik op "Author & Monitor" om de Azure Data Factory-editor te openen.
 
-en om verbinding te maken met de databases.
+2. **Linked Services**
+   - Klik op "Author" en ga naar "Connections".
+   - Klik op "New" om Linked Services voor beide Azure SQL Databases te configureren. Zorg ervoor dat je de verbindingsreeksen correct instelt om toegang te krijgen tot de databases.
+
+3. **Toegang verlenen aan Azure Data Factory**
+   - Ga naar de Azure Portal en zoek naar de Azure SQL Databases die je in opdracht 
+
+1 hebt aangemaakt.
+   - Klik op elke database en ga naar "Firewall en virtueel netwerk".
+   - Voeg het IP-adres van je Azure Data Factory toe aan de lijst met toegestane IP-adressen om verbinding te maken met de databases.
+
+4. **Voer de volgende SQL-code uit om Azure Data Factory toegang te geven tot de databases:**
+
+   ```sql
+   CREATE USER [azure-data-factory-name] FROM EXTERNAL PROVIDER
+   EXEC sp.addrolemember 'db_owner','azure-data-factory-name'
+   ```
+
+   Hiermee voeg je de Managed Identity van Azure Data Factory toe als gebruiker van de SQL Databases en ken je de `db_owner`-rol toe. Dit zorgt ervoor dat Azure Data Factory de nodige machtigingen heeft om gegevens te schrijven naar en te lezen uit de databases.
 
 ### Opdracht 4: Configureren van Datasets
 
-#### Stap 1: Azure Data Factory
-- Binnen de Azure Data Factory-editor, klik je op "Author" en ga je naar "Author".
-- Klik op "New Dataset" om Datasets te configureren die verwijzen naar de gegevensbronnen en bestemmingen die je wilt gebruiken.
+**Opdracht:** Configureren van Datasets die verwijzen naar de gegevensbronnen en bestemmingen die je wilt gebruiken.
+
+**Uit te voeren stappen:**
+
+1. **Azure Data Factory**
+   - Binnen de Azure Data Factory-editor, klik je op "Author" en ga je naar "Author".
+   - Klik op "New Dataset" om Datasets te configureren die verwijzen naar de gegevensbronnen en bestemmingen die je wilt gebruiken.
 
 ### Opdracht 5: Configureren van Pipelines
 
-#### Stap 1: Azure Data Factory
-- Ga naar "Author" in de Azure Data Factory-editor.
-- Klik op "New Pipeline" om Pipelines te maken en definieer gegevenstransformaties en -verplaatsingen tussen je Datasets.
+**Opdracht:** Aanmaken van Pipelines en definieer gegevenstransformaties en -verplaatsingen tussen je Datasets.
+
+**Uit te voeren stappen:**
+
+1. **Azure Data Factory**
+   - Ga naar "Author" in de Azure Data Factory-editor.
+   - Klik op "New Pipeline" om Pipelines te maken en definieer gegevenstransformaties en -verplaatsingen tussen je Datasets.
 
 ### Opdracht 6: Laden van gegevens naar Azure SQL Database
 
-#### Stap 1: Azure Data Factory
-- Binnen je Pipelines, configureer activiteiten om gegevens van je bronnen naar de doeldatabase te kopiëren. Je kunt gegevensverplaatsingstaken gebruiken om de gegevens te laden.
+**Opdracht:** Laden van gegevens vanuit je bronnen naar de doeldatabase.
+
+**Uit te voeren stappen:**
+
+1. **Azure Data Factory**
+   - Binnen je Pipelines, configureer activiteiten om gegevens van je bronnen naar de doeldatabase te kopiëren. Gebruik gegevensverplaatsingstaken zoals de "Copy Data"-taak om de gegevens te laden.
 
 ### Opdracht 7: Verbinden van Power BI
 
-#### Stap 1: Power BI Desktop
-- Download en installeer [Power BI Desktop](https://powerbi.microsoft.com/nl-nl/desktop/).
-- Open Power BI Desktop.
+**Opdracht:** Verbinden van Power BI met de doeldatabase van je Azure SQL Databases.
 
-#### Stap 2: Gegevensverbinding
-- Klik op "Gegevens ophalen" om een nieuwe gegevensverbinding te maken naar de doeldatabase van je Azure SQL Database. Gebruik de juiste verbindingsreeks die je in opdracht 3 hebt geconfigureerd.
+**Uit te voeren stappen:**
 
-#### Stap 3: Gegevensvisualisatie
-- Bouw rapporten en dashboards op basis van de gegevens in je doeldatabase met behulp van Power BI Desktop.
+1. **Power BI Desktop**
+   - Download en installeer [Power BI Desktop](https://powerbi.microsoft.com/nl-nl/desktop/).
+   - Open Power BI Desktop.
+
+2. **Gegevensverbinding**
+   - Klik op "Gegevens ophalen" om een nieuwe gegevensverbinding te maken naar de doeldatabase van je Azure SQL Databases. Gebruik de juiste verbindingsreeks die je in opdracht 3 hebt geconfigureerd.
+
+3. **Gegevensvisualisatie**
+   - Bouw rapporten en dashboards op basis van de gegevens in je doeldatabase met behulp van Power BI Desktop.
 
 ## Bonusopdracht
 
-Voor de bonusopdracht om CSV-bestanden in deze repository te laden in je Azure SQL Database, kun je de volgende stappen volgen:
+**Opdracht:** Laden van CSV-bestanden van deze repository in je Azure SQL Database.
 
-#### Stap 1: Azure Data Factory
-- Breid je Azure Data Factory-pijplijnen uit om CSV-bestanden van deze repository te lezen en te transformeren. Je kunt bijvoorbeeld een Blob Storage-linked service gebruiken om de bestanden op te slaan en dan een kopieeractiviteit gebruiken om de gegevens naar je doeldatabase te verplaatsen.
+**Uit te voeren stappen:**
 
-Dit zijn de bijgewerkte stappen voor de opdrachten. Zorg ervoor dat je alle stappen zorgvuldig volgt om de training succesvol af te ronden.
+1. **Azure Data Factory**
+   - Breid je Azure Data Factory-pijplijnen uit om CSV-bestanden van deze repository te lezen en te transformeren. Je kunt bijvoorbeeld een Blob Storage-linked service gebruiken om de bestanden op te slaan en dan een kopieeractiviteit gebruiken om de gegevens naar je doeldatabase te verplaatsen.
+
+Dit zijn de bijgewerkte en gedetailleerde stappen voor de opdrachten. Zorg ervoor dat je alle stappen zorgvuldig volgt om de training succesvol af te ronden.
